@@ -1,0 +1,52 @@
+PRÁCTICAS DE SISTEMAS OPERATIVOS I
+SEGUNDA PRÁCTICA EVALUABLE (2024-25)
+EL EFECTO DOMINÓ
+
+ENUNCIADO
+----------
+El programa a entregar debe consistir en un único fichero fuente llamado: dom.c.
+Tras su compilación debe generar un ejecutable llamado obligatoriamente "dom".
+Es obligatorio respetar las mayúsculas y minúsculas.
+
+La ejecución del programa debe crear un árbol de procesos que simule la caída de una ristra de fichas de dominó.
+
+Cada proceso, una vez creado, permanecerá bloqueado sin consumir CPU. Al recibir una señal SIGTERM desde el
+proceso original, se desencadenará una cascada de señales que provocará la terminación de todos los procesos
+en el orden indicado.
+
+SINCRONIZACIÓN Y COMUNICACIÓN ENTRE PROCESOS
+--------------------------------------------
+- La comunicación entre procesos debe realizarse exclusivamente mediante un único fichero proyectado en memoria (mmap).
+- No está permitido el uso de ficheros adicionales, tuberías, exec*, system() u otros mecanismos de IPC no indicados.
+- Si se necesita sincronizar acciones, se podrán usar señales, pero nunca espera ocupada.
+
+RESTRICCIONES
+--------------
+- No se permite el uso de espera ocupada (busy waiting) ni semiocupada, salvo que se indique explícitamente.
+- Los procesos deben usar manejadores de señales y sigsuspend() para bloquearse sin consumir CPU.
+- No se pueden suponer PIDs consecutivos ni ordenados.
+- El árbol de procesos debe coincidir exactamente con el especificado en el enunciado.
+
+RECOMENDACIONES DE DESARROLLO
+------------------------------
+1. Crear primero grupos pequeños de procesos (por ejemplo, los procesos 37, 38 y 39) y verificar con la herramienta Arbol_dominO.
+2. Continuar generando el resto del árbol por etapas (40 a 45, 46 a 53, y finalmente la ristra 54 a 58).
+3. Verificar con "ps -f" y que los procesos no consuman CPU.
+4. Implementar la propagación de señales de forma progresiva, asegurando que la cascada de SIGTERM funcione correctamente.
+5. Manejar correctamente los PIDs en memoria compartida para que procesos como 51, 53 y 55 puedan matar a procesos que no son sus hijos.
+6. Usar sigsuspend() y señales (por ejemplo SIGUSR1) para avisar a procesos cuando la información esté lista en memoria.
+7. Evitar sleep() para sincronización, salvo que esté explícitamente permitido.
+
+PLAZO Y PRESENTACIÓN
+---------------------
+- Consultar los plazos de entrega en la web de la asignatura.
+- Comprobar que el árbol de procesos y la cascada de señales funcionan correctamente antes de entregar.
+
+NOTAS IMPORTANTES
+------------------
+- Si usáis "dom &" para ejecutar, podéis usar "kill %%" para matar todos los procesos tras cada prueba.
+- Aseguraos de que los procesos mueren en el orden de fichas de dominó, sin necesidad de usar wait().
+- Verificar que no se envían señales a PID 0 por error (bloquear y desbloquear señales correctamente).
+- Evitar variables globales siempre que sea posible.
+
+Este documento resume el enunciado y los puntos clave para la correcta implementación de la práctica.

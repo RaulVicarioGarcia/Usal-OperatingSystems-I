@@ -1,0 +1,15 @@
+
+PACIENTE: María Sánchez García
+ESPECIALIDAD: Enfermería
+HORA_INICIAL: 9
+HORA_FINAL: 10
+DIA: 5_10_24
+ID: 51024_1
+
+PACIENTE: Francisco García Pérez
+ESPECIALIDAD: Atención primaria
+HORA_INICIAL: 18
+HORA_FINAL: 19
+DIA: 6_10_24
+ID: 51024_2
+
